@@ -219,6 +219,7 @@ and type_param = {
 	tp_name : placed_name;
 	tp_params :	type_param list;
 	tp_constraints : type_hint option;
+	tp_default : type_hint option;
 	tp_meta : metadata;
 }
 
@@ -581,7 +582,7 @@ let map_expr loop (e,p) =
 	and tparamdecl t =
 		let constraints = opt type_hint t.tp_constraints in
 		let params = List.map tparamdecl t.tp_params in
-		{ tp_name = t.tp_name; tp_constraints = constraints; tp_params = params; tp_meta = t.tp_meta }
+		{ tp_name = t.tp_name; tp_constraints = constraints; tp_default = None; tp_params = params; tp_meta = t.tp_meta }
 	and func f =
 		let params = List.map tparamdecl f.f_params in
 		let args = List.map (fun (n,o,m,t,e) ->

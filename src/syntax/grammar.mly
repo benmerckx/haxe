@@ -837,10 +837,15 @@ and parse_constraint_param = parser
 				| [< >] -> serror())
 			| [< >] -> None
 		) in
+		let dto = (match s with parser
+			| [< '(Binop OpAssign, _); t = parse_complex_type >] -> Some t
+			| [< >] -> None
+		) in
 		{
 			tp_name = name;
 			tp_params = params;
 			tp_constraints = cto;
+			tp_default = dto;
 			tp_meta = meta;
 		}
 

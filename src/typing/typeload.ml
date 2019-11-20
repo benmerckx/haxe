@@ -240,7 +240,7 @@ let rec load_instance' ctx (t,p) allow_no_params =
 			| [TPType t] -> TDynamic (load_complex_type ctx true t)
 			| _ -> error "Too many parameters for Dynamic" p
 		else begin
-			if not is_rest && ctx.com.display.dms_error_policy <> EPIgnore && List.length types <> List.length t.tparams then error ("Invalid number of type parameters for " ^ s_type_path path) p;
+			(*if not is_rest && ctx.com.display.dms_error_policy <> EPIgnore && List.length types <> List.length t.tparams then error ("Invalid number of type parameters for " ^ s_type_path path) p;*)
 			let tparams = List.map (fun t ->
 				match t with
 				| TPExpr e ->
@@ -292,7 +292,7 @@ let rec load_instance' ctx (t,p) allow_no_params =
 					[]
 				| [],(_,t) :: tl when ctx.com.display.dms_error_policy = EPIgnore ->
 					t :: loop [] tl is_rest
-				| [],_ ->
+				| [], (_,t) :: tl ->
 					error ("Not enough type parameters for " ^ s_type_path path) p
 				| t :: tl,[] ->
 					if is_rest then

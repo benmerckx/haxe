@@ -682,6 +682,7 @@ and decode_tparams v =
 
 and decode_tparam_decl v =
 	let vconstraints = field v "constraints" in
+	let vdefault = field v "default" in
 	{
 		tp_name = decode_placed_name (field v "name_pos") (field v "name");
 		tp_constraints = if vconstraints = vnull then None else (match decode_array vconstraints with
@@ -689,6 +690,7 @@ and decode_tparam_decl v =
 			| [t] -> Some (decode_ctype t)
 			| tl -> Some (CTIntersection (List.map decode_ctype tl),Globals.null_pos)
 		);
+		tp_default = if vdefault = vnull then None else Some (decode_ctype vdefault);
 		tp_params = decode_tparams (field v "params");
 		tp_meta = decode_meta_content (field v "meta");
 	}

@@ -200,6 +200,7 @@ let convert_param ctx p parent param =
 			tp_name = jname_to_hx name,null_pos;
 			tp_params = [];
 			tp_constraints = convert_constraints ctx p constraints;
+			tp_default = None;
 			tp_meta = [];
 		}
 
@@ -322,6 +323,7 @@ let convert_java_enum ctx p pe =
 								tp_name = name,null_pos;
 								tp_params = [];
 								tp_constraints = convert_constraints ctx p (ext :: impl);
+								tp_default = None;
 								tp_meta = [];
 							}
 						| (name, None, impl) ->
@@ -329,6 +331,7 @@ let convert_java_enum ctx p pe =
 								tp_name = name,null_pos;
 								tp_params = [];
 								tp_constraints = convert_constraints ctx p impl;
+								tp_default = None;
 								tp_meta = [];
 							}
 					) field.jf_types in
